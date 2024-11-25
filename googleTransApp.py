@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic  # QT Designer에서 만든 ui를 불러오는 모듈
+from PyQt5.QtCore import Qt
 
 from os import environ
 import multiprocessing as mp
@@ -18,6 +19,7 @@ class GoogleTransApp(QMainWindow, form_class):
         self.setWindowTitle("구글 한줄 번역기")  # 윈도우 제목 설정
         self.setWindowIcon(QIcon("ui/google.png"))  # 윈도우 아이콘 설정
         self.statusBar().showMessage("구글 번역기 v1.0")  # 윈도우 상태 표시줄 설정
+        self.setWindowFlag(Qt.WindowStaysOnTopHint)  # 항상위에 옵션
 
         # 버튼 클릭 이벤트 처리
         self.trans_btn.clicked.connect(self.trans_execute)
