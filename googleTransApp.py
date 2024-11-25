@@ -25,6 +25,8 @@ class GoogleTransApp(QMainWindow, form_class):
         self.input_reset_btn.clicked.connect(self.remove_input_edit)  # 입력 초기화 버튼 클릭 이벤트 처리
         self.all_reset_btn.clicked.connect(self.remove_all_edit)  # 모든 에디트 초기화 버튼 클릭 이벤트 처리
 
+        self.trans = googletrans.Translator()
+
     def trans_execute(self):  # 번역 실행 메소드
         # print("번역실행 버튼이 클릭되었습니다!!")
         kor_input_text = self.kor_input_edit.text()  # 해당 line edit 에 입력된 텍스트 가져오기
@@ -32,10 +34,14 @@ class GoogleTransApp(QMainWindow, form_class):
         if kor_input_text == "":  # 입력된 내용이 공백인지 확인
             QMessageBox.warning(self, "입력오류!","한글입력란에 반드시\n문장을 넣어주세요.")
         else:
-            trans = googletrans.Translator()  # 구글 번역 객체 생성
-            resultEng = trans.translate(kor_input_text, dest="en")  # 영어 번역 결과
-            resultJap = trans.translate(kor_input_text, dest="ja")  # 일본어 번역 결과
-            resultChn = trans.translate(kor_input_text, dest="zh-cn")  # 중국어 번역 결과
+            # trans = googletrans.Translator()  # 구글 번역 객체 생성
+
+            resultEng = self.trans.translate(kor_input_text, dest="en")
+            resultJap = self.trans.translate(kor_input_text, dest="en")
+            resultChn = self.trans.translate(kor_input_text, dest="en")
+            # resultEng = trans.translate(kor_input_text, dest="en")  # 영어 번역 결과
+            # resultJap = trans.translate(kor_input_text, dest="ja")  # 일본어 번역 결과
+            # resultChn = trans.translate(kor_input_text, dest="zh-cn")  # 중국어 번역 결과
 
             self.eng_output_edit.append(resultEng.text)  # 영어 출력
             self.jap_output_edit.append(resultJap.text)  # 일본어 출력
