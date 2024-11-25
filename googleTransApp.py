@@ -4,6 +4,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic  # QT Designer에서 만든 ui를 불러오는 모듈
 
+from os import environ
+import multiprocessing as mp
+
 form_class = uic.loadUiType("ui/googletrans.ui")[0]
 # QT Designer에서 만든 외부 ui 불러오기
 
@@ -46,6 +49,17 @@ class GoogleTransApp(QMainWindow, form_class):
         self.eng_output_edit.clear()
         self.jap_output_edit.clear()
         self.chn_output_edit.clear()
+
+def suppress_qt_warnings():  # 해상도별 글자크기 강제 고정하는 함수
+    environ["QT_DEVICE_PIXEL_RATIO"] = "0"
+    environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+    environ["QT_SCREEN_SCALE_FACTORS"] = "1"
+    environ["QT_SCALE_FACTOR"] = "1"
+
+
+# 해상도 고정 함수 호출
+suppress_qt_warnings()
+mp.freeze_support()
 
 app = QApplication(sys.argv)
 googleWin = GoogleTransApp()
