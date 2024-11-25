@@ -16,10 +16,13 @@ class GoogleTransApp(QMainWindow, form_class):
         self.setWindowIcon(QIcon("ui/google.png"))  # 윈도우 아이콘 설정
         self.statusBar().showMessage("구글 번역기 v1.0")  # 윈도우 상태 표시줄 설정
 
+        # 버튼 클릭 이벤트 처리
         self.trans_btn.clicked.connect(self.trans_execute)
         # trans_btn 버튼이 실행되면 호출될 메소드를 지정
+        self.input_reset_btn.clicked.connect(self.remove_input_edit)  # 입력 초기화 버튼 클릭 이벤트 처리
+        self.all_reset_btn.clicked.connect(self.remove_all_edit)  # 모든 에디트 초기화 버튼 클릭 이벤트 처리
 
-    def trans_execute(self):
+    def trans_execute(self):  # 번역 실행 메소드
         # print("번역실행 버튼이 클릭되었습니다!!")
         kor_input_text = self.kor_input_edit.text()  # 해당 line edit 에 입력된 텍스트 가져오기
 
@@ -32,7 +35,14 @@ class GoogleTransApp(QMainWindow, form_class):
         self.jap_output_edit.append(resultJap.text)  # 일본어 출력
         self.chn_output_edit.append(resultChn.text)  # 중국어 출력
 
+    def remove_input_edit(self):  # 입력 에디트 초기화 메소드
+        self.kor_input_edit.clear()  # 해당 라인 에디트의 내용 삭제
 
+    def remove_all_edit(self):  # 모든 입력 출력란 초기화 메소드
+        self.kor_input_edit.clear()
+        self.eng_output_edit.clear()
+        self.jap_output_edit.clear()
+        self.chn_output_edit.clear()
 
 app = QApplication(sys.argv)
 googleWin = GoogleTransApp()
