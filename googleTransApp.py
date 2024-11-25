@@ -16,6 +16,22 @@ class GoogleTransApp(QMainWindow, form_class):
         self.setWindowIcon(QIcon("ui/google.png"))  # 윈도우 아이콘 설정
         self.statusBar().showMessage("구글 번역기 v1.0")  # 윈도우 상태 표시줄 설정
 
+        self.trans_btn.clicked.connect(self.trans_execute)
+        # trans_btn 버튼이 실행되면 호출될 메소드를 지정
+
+    def trans_execute(self):
+        # print("번역실행 버튼이 클릭되었습니다!!")
+        kor_input_text = self.kor_input_edit.text()  # 해당 line edit 에 입력된 텍스트 가져오기
+
+        trans = googletrans.Translator()  # 구글 번역 객체 생성
+        resultEng = trans.translate(kor_input_text, dest="en")  # 영어 번역 결과
+        resultJap = trans.translate(kor_input_text, dest="ja")  # 일본어 번역 결과
+        resultChn = trans.translate(kor_input_text, dest="zh-cn")  # 중국어 번역 결과
+
+        self.eng_output_edit.append(resultEng.text)  # 영어 출력
+        self.jap_output_edit.append(resultJap.text)  # 일본어 출력
+        self.chn_output_edit.append(resultChn.text)  # 중국어 출력
+
 
 
 app = QApplication(sys.argv)
